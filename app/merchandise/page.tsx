@@ -5,24 +5,25 @@ import { Navigation } from '@/components/navigation';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/lib/cart-context';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Product {
   id: string;
   name: string;
   price: number;
   description: string;
-  image?: string;
+  image: string;
 }
 
 const SAMPLE_PRODUCTS: Product[] = [
-  { id: '1', name: 'Saturn Ring Model', price: 29.99, description: 'Detailed model of Saturn with its iconic rings' },
-  { id: '2', name: 'Mars Mug', price: 14.99, description: 'Coffee mug featuring the red planet' },
-  { id: '3', name: 'Space Poster Set', price: 24.99, description: 'Set of 6 high-quality space posters' },
-  { id: '4', name: 'Meteorite Replica', price: 19.99, description: 'Authentic-looking meteorite specimen' },
-  { id: '5', name: 'Galaxy Hoodie', price: 54.99, description: 'Comfortable hoodie with galaxy print' },
-  { id: '6', name: 'Moon Lamp', price: 39.99, description: 'Decorative 3D printed moon lamp' },
-  { id: '7', name: 'Planet Plushies', price: 34.99, description: 'Set of all 8 planets as cute plushies' },
-  { id: '8', name: 'Star Map T-Shirt', price: 24.99, description: 'Vintage star map design on premium cotton' },
+  { id: '1', name: 'Saturn Ring Model', price: 29.99, description: 'Detailed model of Saturn with its iconic rings', image: '/tshirt-1.jpg' },
+  { id: '2', name: 'Mars Mug', price: 14.99, description: 'Coffee mug featuring the red planet', image: '/tshirt-2.jpg' },
+  { id: '3', name: 'Space Poster Set', price: 24.99, description: 'Set of 6 high-quality space posters', image: '/tshirt-3.jpg' },
+  { id: '4', name: 'Meteorite Replica', price: 19.99, description: 'Authentic-looking meteorite specimen', image: '/tshirt-4.jpg' },
+  { id: '5', name: 'Galaxy Hoodie', price: 54.99, description: 'Comfortable hoodie with galaxy print', image: '/tshirt-5.jpg' },
+  { id: '6', name: 'Moon Lamp', price: 39.99, description: 'Decorative 3D printed moon lamp', image: '/tshirt-6.jpg' },
+  { id: '7', name: 'Planet Plushies', price: 34.99, description: 'Set of all 8 planets as cute plushies', image: '/tshirt-7.jpg' },
+  { id: '8', name: 'Star Map T-Shirt', price: 24.99, description: 'Vintage star map design on premium cotton', image: '/tshirt-8.jpg' },
 ];
 
 interface CartItem {
@@ -74,10 +75,14 @@ export default function MerchandisePage() {
             {SAMPLE_PRODUCTS.map(product => (
               <div
                 key={product.id}
-                className="bg-card border border-border rounded-lg overflow-hidden hover:border-primary transition h-full flex flex-col"
-              >
-                <div className="h-48 bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center text-5xl">
-                  {['🪐', '🌙', '🛸', '⭐', '🌍', '🔭', '🪐', '🌠'][Math.floor(Math.random() * 8)]}
+                className="bg-card border border-border rounded-lg overflow-hidden hover:border-primary transition h-full flex flex-col">
+                <div className="relative h-48 bg-muted">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-xl font-bold mb-2">{product.name}</h3>
@@ -152,9 +157,11 @@ export default function MerchandisePage() {
                       <span className="text-lg font-bold">Total:</span>
                       <span className="text-2xl font-bold text-primary">${total.toFixed(2)}</span>
                     </div>
-                    <Button className="w-full bg-primary hover:bg-primary/90 mb-2">
-                      Proceed to Checkout
-                    </Button>
+                    <Link href="/checkout" className="block mb-2">
+                      <Button className="w-full bg-primary hover:bg-primary/90">
+                        Proceed to Checkout
+                      </Button>
+                    </Link>
                     <Button
                       variant="outline"
                       className="w-full"
